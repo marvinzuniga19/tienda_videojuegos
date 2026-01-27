@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Checkout</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Información de envío</h5>
+                        
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección de envío *</label>
+                            <textarea class="form-control" id="direccion" name="direccion" rows="3" required>{{ request.POST.direccion }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notas" class="form-label">Notas adicionales (opcional)</label>
+                            <textarea class="form-control" id="notas" name="notas" rows="2">{{ request.POST.notas }}</textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg">Confirmar pedido</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Resumen del pedido</h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th class="text-end">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <strong>{{ item.juego.titulo }}</strong><br>
+                                                <small class="text-muted">{{ item.cantidad }} × ${{ item.juego.precio }}</small>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">${{ item.subtotal }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Total:</strong></td>
+                                    <td class="text-end"><strong>${{ total }}</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="{% url 'catalogo:carrito' %}" class="btn btn-outline-secondary btn-sm">Volver al carrito</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

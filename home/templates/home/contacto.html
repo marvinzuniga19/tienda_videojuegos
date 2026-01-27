@@ -1,17 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacto - Tienda de Videojuegos</title>
-</head>
-<body>
-  <h1>Contacto</h1>
-  <p>Envia un correo a contacto@tiendavideojuegos.com</p>
+{% extends 'base.html' %}
 
-  <footer>
-    <p>2025 Tienda de Videojuegos</p>
-    <a href="{% url 'home' %}">Inicio</a>
-  </footer>
-</body>
-</html>
+{% block title %}Contacto - Tienda de Videojuegos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Contacto</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Envíanos un mensaje</h5>
+                    <p class="card-text">¿Tienes alguna pregunta o sugerencia? Estamos aquí para ayudarte.</p>
+                    
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="asunto" class="form-label">Asunto</label>
+                            <input type="text" class="form-control" id="asunto" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="mensaje" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Información de contacto</h5>
+                    
+                    <div class="mb-3">
+                        <h6>📧 Correo electrónico</h6>
+                        <p>contacto@tiendavideojuegos.com</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6>📞 Teléfono</h6>
+                        <p>+34 900 123 456</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6>🕒 Horario de atención</h6>
+                        <p>Lunes a Viernes: 9:00 - 18:00<br>
+                        Sábados: 10:00 - 14:00</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6>📍 Dirección</h6>
+                        <p>Calle Gaming 123<br>
+                        28080 Madrid<br>
+                        España</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6>🔗 Síguenos en redes sociales</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm">Facebook</a>
+                            <a href="#" class="btn btn-outline-info btn-sm">Twitter</a>
+                            <a href="#" class="btn btn-outline-danger btn-sm">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

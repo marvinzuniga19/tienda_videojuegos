@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ juego.titulo }} - Tienda de Videojuegos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'catalogo:catalogo' %}">Catálogo</a></li>
+            <li class="breadcrumb-item active">{{ juego.titulo }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-4">
+            {% if juego.imagen %}
+                <img src="{{ juego.imagen.url }}" class="img-fluid rounded" alt="{{ juego.titulo }}">
+            {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light rounded" style="height: 400px;">
+                    <span class="text-muted">Sin imagen</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h1>{{ juego.titulo }}</h1>
+            <p class="text-muted">Desarrollado por {{ juego.desarrollador }}</p>
+            
+            <div class="mb-3">
+                <span class="badge bg-primary">{{ juego.plataforma.nombre }}</span>
+                <span class="badge bg-secondary">{{ juego.categoria.nombre }}</span>
+                {% if juego.rating > 0 %}
+                    <span class="badge bg-warning">⭐ {{ juego.rating }}</span>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <h3>Descripción</h3>
+                <p>{{ juego.descripcion }}</p>
+            </div>
+
+            <div class="mb-4">
+                <h4>Detalles</h4>
+                <ul class="list-unstyled">
+                    <li><strong>Plataforma:</strong> {{ juego.plataforma.nombre }}</li>
+                    <li><strong>Categoría:</strong> {{ juego.categoria.nombre }}</li>
+                    <li><strong>Fecha de lanzamiento:</strong> {{ juego.fecha_lanzamiento }}</li>
+                    <li><strong>Desarrollador:</strong> {{ juego.desarrollador }}</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">${{ juego.precio }}</h3>
+                            {% if juego.disponible %}
+                                <span class="text-success">Disponible ({{ juego.stock }} unidades)</span>
+                            {% else %}
+                                <span class="text-danger">Agotado</span>
+                            {% endif %}
+                        </div>
+                        {% if juego.disponible %}
+                            <a href="{% url 'catalogo:agregar_al_carrito' juego.id %}" class="btn btn-primary btn-lg">
+                                Agregar al carrito
+                            </a>
+                        {% else %}
+                            <button class="btn btn-secondary btn-lg" disabled>
+                                Agotado
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Juegos relacionados -->
+    {% if juegos_relacionados %}
+        <div class="mt-5">
+            <h3 class="mb-4">Juegos relacionados</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                {% for juego_rel in juegos_relacionados %}
+                    <div class="col">
+                        <div class="card h-100">
+                            {% if juego_rel.imagen %}
+                                <img src="{{ juego_rel.imagen.url }}" class="card-img-top" alt="{{ juego_rel.titulo }}" style="height: 150px; object-fit: cover;">
+                            {% else %}
+                                <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 150px;">
+                                    <span class="text-muted">Sin imagen</span>
+                                </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h6 class="card-title">{{ juego_rel.titulo }}</h6>
+                                <p class="card-text text-muted small">{{ juego_rel.plataforma.nombre }}</p>
+                                <p class="card-text">${{ juego_rel.precio }}</p>
+                                <a href="{% url 'catalogo:detalle_juego' juego_rel.id %}" class="btn btn-outline-primary btn-sm">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

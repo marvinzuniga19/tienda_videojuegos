@@ -1,19 +1,67 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio - Tienda de Videojuegos</title>
-</head>
-<body>
-  <h1>Bienvenido a la tienda de videojuegos</h1>
-  <p>Explora nuestro catalogo y disfruta</p>
+{% extends 'base.html' %}
 
-  <footer>
-    <p>2025 Tienda de Videojuegos</p>
-    <a href="{% url 'contacto' %}">Contacto</a>
-  </footer>
-  
-</body>
-</html>
+{% block title %}Inicio - Tienda de Videojuegos{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-primary text-white py-5 mb-5">
+    <div class="container text-center">
+        <h1 class="display-4">🎮 Bienvenido a la Tienda de Videojuegos</h1>
+        <p class="lead">Explora nuestro catálogo y encuentra los mejores juegos de todas las plataformas</p>
+        <a href="{% url 'catalogo:catalogo' %}" class="btn btn-light btn-lg">Explorar Catálogo</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 text-center mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">🎯 Gran Variedad</h3>
+                    <p class="card-text">Juegos para todas las plataformas: PlayStation, Xbox, Nintendo Switch, PC y más.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">💰 Precios Competitivos</h3>
+                    <p class="card-text">Las mejores ofertas y precios del mercado en videojuegos digitales y físicos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">🚀 Entrega Rápida</h3>
+                    <p class="card-text">Envío rápido y seguro. Descarga inmediata para juegos digitales.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h2>¿Por qué elegirnos?</h2>
+            <p class="lead">Somos tu tienda especializada en videojuegos con años de experiencia en el mercado.</p>
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <h4>🏆 Calidad Garantizada</h4>
+                    <p>Solo productos originales y de calidad.</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>🎁 Ofertas Exclusivas</h4>
+                    <p>Descuentos y promociones únicas para nuestros clientes.</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>🛡️ Compra Segura</h4>
+                    <p>Pagos seguros y protección de datos.</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>📞 Soporte 24/7</h4>
+                    <p>Asistencia técnica y atención al cliente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

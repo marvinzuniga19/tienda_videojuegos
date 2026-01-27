@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Catálogo de Videojuegos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Catálogo de Videojuegos</h1>
+    
+    <!-- Barra de búsqueda y filtros -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form method="get" class="d-flex gap-2 mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Buscar juegos..." value="{{ search_actual }}">
+                <select name="categoria" class="form-select">
+                    <option value="">Todas las categorías</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}" {% if categoria_actual == categoria.id|stringformat:"s" %}selected{% endif %}>
+                            {{ categoria.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <select name="plataforma" class="form-select">
+                    <option value="">Todas las plataformas</option>
+                    {% for plataforma in plataformas %}
+                        <option value="{{ plataforma.id }}" {% if plataforma_actual == plataforma.id|stringformat:"s" %}selected{% endif %}>
+                            {{ plataforma.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Grid de juegos -->
+    {% if juegos %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {% for juego in juegos %}
+                <div class="col">
+                    <div class="card h-100">
+                        {% if juego.imagen %}
+                            <img src="{{ juego.imagen.url }}" class="card-img-top" alt="{{ juego.titulo }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                                <span class="text-muted">Sin imagen</span>
+                            </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ juego.titulo }}</h5>
+                            <p class="card-text text-muted small mb-1">{{ juego.plataforma.nombre }}</p>
+                            <p class="card-text text-muted small mb-2">{{ juego.categoria.nombre }}</p>
+                            <p class="card-text">${{ juego.precio }}</p>
+                            {% if juego.disponible %}
+                                <span class="badge bg-success mb-2">Disponible ({{ juego.stock }})</span>
+                            {% else %}
+                                <span class="badge bg-danger mb-2">Agotado</span>
+                            {% endif %}
+                            <div class="mt-auto">
+                                <a href="{% url 'catalogo:detalle_juego' juego.id %}" class="btn btn-outline-primary btn-sm">Ver detalles</a>
+                                {% if juego.disponible %}
+                                    <a href="{% url 'catalogo:agregar_al_carrito' juego.id %}" class="btn btn-primary btn-sm">Agregar al carrito</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p class="text-muted">No se encontraron juegos.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
